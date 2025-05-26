@@ -6,7 +6,6 @@ type AvailableThemes = 'dark' | 'light';
 
 export function Menu() {
   const [theme, setTheme] = useState<AvailableThemes>(() => {
-    // Check localStorage for saved theme
     const storageTheme = localStorage.getItem('theme') as AvailableThemes || 'dark';
     return storageTheme;
   });
@@ -17,7 +16,7 @@ export function Menu() {
   }
 
   function handleThemeChange(event: React.MouseEvent<HTMLAnchorElement>) {
-    event.preventDefault(); // don't follow the link
+    event.preventDefault();
 
     setTheme(prevTheme =>{
       const newTheme = prevTheme === 'dark' ? 'light' : 'dark';
@@ -27,10 +26,7 @@ export function Menu() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme); // Save theme to localStorage
-
-    // Cleanup function to reset theme if needed
-    // return () => {}
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   return (

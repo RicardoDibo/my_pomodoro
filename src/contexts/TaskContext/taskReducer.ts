@@ -23,7 +23,6 @@ export function taskReducer(
       };
     }
     case 'INTERRUPT_TASK': {
-
       return {
         ...state,
         activeTask: null,
@@ -40,8 +39,33 @@ export function taskReducer(
         }),
       };
     }
+    case 'COMPLETE_TASK': {
+      return {
+        ...state,
+        activeTask: null,
+        secondsRemaining: 0,
+        formattedSecondsRemaining: '00:00',
+        tasks: state.tasks.map(task => {
+          if (state.activeTask && state.activeTask.id === task.id) {
+            return {
+              ...task,
+              completedDate: Date.now(),
+            };
+          }
+          return task;
+        }),
+      };
+    }
     case 'RESET_STATE': {
       return state;
+    }
+    case 'COUNT_DOWN': {
+      console.log('Counting down:', action.payload.secondsRemaining);
+      return {
+        ...state,
+        secondsRemaining : action.payload.secondsRemaining,
+        formattedSecondsRemaining: formatSecondsToMinutes(action.payload.secondsRemaining),
+      };
     }
   }
 

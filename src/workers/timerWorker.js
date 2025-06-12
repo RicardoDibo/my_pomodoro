@@ -1,9 +1,8 @@
 let isRunning = false;
 
 self.onmessage = function(event) {
-  if (isRunning) {
-    return;
-  }
+  if (isRunning) return;
+
   isRunning = true;
 
   const state = event.data;
@@ -14,13 +13,13 @@ self.onmessage = function(event) {
   let countDownSeconds = Math.ceil((endDate - now) / 1000);
   
   function tickSeconds() {
+    self.postMessage({ countDownSeconds });
+
     const now = Date.now();
     countDownSeconds = Math.floor((endDate - now) / 1000);
-
-    self.postMessage(countDownSeconds)
 
     setTimeout(tickSeconds, 1000);
   }
 
   tickSeconds();
-}
+};

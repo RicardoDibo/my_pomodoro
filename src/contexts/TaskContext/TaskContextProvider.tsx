@@ -11,7 +11,7 @@ export type TaskContextProviderProps = {
 
 export function TaskContextProvider({ children }: TaskContextProviderProps) {
   const [state, dispatch] = useReducer(taskReducer, initialTaskState);
-  let playBeepRef = useRef<ReturnType<typeof loadBeep> | null>(null);
+  const playBeepRef = useRef<ReturnType<typeof loadBeep> | null>(null);
 
   const worker = TimerWorkerManager.getInstance();
   

@@ -8,6 +8,7 @@ import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import { getNextCycle } from "../../utils/getNextCycle";
 import { getNextCycleType } from "../../utils/getNextCycleType";
 import { Tips } from "../Tips";
+import { showMessage } from "../../adapters/showMessage";
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
@@ -18,12 +19,13 @@ export function MainForm() {
 
   const handleCrateNewTask = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    showMessage.dismiss();
 
-    if (!numberNameInput.current) return; // Ensure the ref is not null
+    if (!numberNameInput.current) return;
 
     const taskName = numberNameInput.current.value.trim();
     if (!taskName) {
-      alert('Please enter a task name');
+      showMessage.warn('Task name is required');
       return;
     }
 
@@ -41,9 +43,13 @@ export function MainForm() {
       type: 'START_TASK',
       payload: newTask,
     });
+
+    showMessage.success('Task started');
   };
 
   function handleInterruptTask() {
+    showMessage.dismiss();
+    showMessage.error('Task interrupted');
     dispatch({type: 'INTERRUPT_TASK'});
   }
 

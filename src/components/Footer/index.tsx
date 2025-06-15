@@ -1,12 +1,12 @@
-import { Link } from 'react-router'
 import styles from './styles.module.css'
+import { RouterLink } from '../RouterLink'
 
 export function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <Link to="/about-pomodoro/">How it works</Link>
-      <Link to="/">Timer &copy; {new Date().getFullYear()} Mabe with React</Link>
+      <RouterLink href="/about-pomodoro/">How it works</RouterLink>
+      <RouterLink href="/">Timer &copy; {new Date().getFullYear()} Mabe with React</RouterLink>
     </footer>
   )
 }

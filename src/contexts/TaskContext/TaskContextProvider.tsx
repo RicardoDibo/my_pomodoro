@@ -12,7 +12,6 @@ export type TaskContextProviderProps = {
 export function TaskContextProvider({ children }: TaskContextProviderProps) {
   const [state, dispatch] = useReducer(taskReducer, initialTaskState);
   const playBeepRef = useRef<ReturnType<typeof loadBeep> | null>(null);
-
   const worker = TimerWorkerManager.getInstance();
   
   worker.onmessage(event => {
@@ -44,6 +43,8 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
       worker.terminate();
     }
 
+    document.title = `${state.formattedSecondsRemaining} - My Pomodoro`;
+    
     worker.postMessage(state);
   }, [worker, state]);
 
